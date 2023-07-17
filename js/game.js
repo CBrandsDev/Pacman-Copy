@@ -26,6 +26,7 @@ const DIRECTION_UP = 3;
 const DIRECTION_LEFT = 2;
 const DIRECTION_BOTTOM = 1;
 
+
 let ghostLocations = [
   { x: 0, y: 0 },
   { x: 176, y: 0 },
@@ -59,15 +60,12 @@ let map = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
-let createNewPacman = () => {
-  pacman = new Pacman(
-    oneBlockSize,
-    oneBlockSize,
-    oneBlockSize,
-    oneBlockSize,
-    oneBlockSize / 5
-  );
-};
+let randomTargetsForGhosts = [
+  { x: 1 * oneBlockSize, y: 1 * oneBlockSize },
+  { x: 1 * oneBlockSize, y: (map.length - 2) * oneBlockSize },
+  { x: (map[0].length - 2) * oneBlockSize, y: oneBlockSize },
+  { x: (map.length - 2) * oneBlockSize, y: (map.length - 2) * oneBlockSize },
+];
 
 let gameLoop = () => {
   update();
@@ -115,9 +113,9 @@ let draw = () => {
   createRect(0, 0, canvas.width, canvas.height, "black");
   drawWalls();
   drawFoods();
+  pacman.draw();
   drawScore();
   drawGhosts();
-  pacman.draw();
 };
 
 let gameInterval = setInterval(gameLoop, 1000 / fps);
@@ -172,6 +170,16 @@ let drawWalls = () => {
       }
     }
   }
+};
+
+let createNewPacman = () => {
+  pacman = new Pacman(
+    oneBlockSize,
+    oneBlockSize,
+    oneBlockSize,
+    oneBlockSize,
+    oneBlockSize / 5
+  );
 };
 
 let createGhosts = () => {
